@@ -1,0 +1,83 @@
+services:
+  postgres:
+    image: docker.io/library/postgres
+    container_name: catalog-service-db
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: support
+    volumes:
+      - postgres_catalog_data:/var/lib/postgresql/data
+    networks:
+      - clinic-network
+    ports:
+      - "5433:5432"
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: catalog-service-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass redis123
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_catalog_data:/data
+    networks:
+      - api-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis Commander (Interfaz web para Redis)
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: api-redis-commander
+    restart: unless-stopped
+    environment:
+      REDIS_HOSTS: local:redis:6379:0:redis123
+    ports:
+      - "8081:8081"
+    depends_on:
+      - redis
+    networks:
+      - api-network
+
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: catalog-service-api
+    restart: unless-stopped
+    environment:
+      # PostgreSQL
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: mi_database #Cambiar por el nombre real de la base de datos
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres123 #cambiar por la contraseña real
+      # Redis
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: redis123
+      # Timezone
+      TZ: America/Bogota
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports:
+      - "8084:8084"
+    networks:
+      - clinic-network
+
+volumes:
+  postgres_data:
+
+networks:
+  clinic-network:
+    driver: bridge

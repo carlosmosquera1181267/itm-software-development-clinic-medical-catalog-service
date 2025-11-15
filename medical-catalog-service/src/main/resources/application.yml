@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: medical-catalog-service
+  datasource:
+    url: jdbc:postgresql://localhost:5433/clinic_catalog
+    hikari:
+      username: admin
+      password: support
+      driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+jackson:
+  default-property-inclusion: non_null
+  time-zone: America/Bogota
+  date-format: dd-MM-yyyy'T'HH:mm:ss.SSSZ
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+
+
+server:
+  servlet:
+      context-path: /api/v1
+  port: 8084
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
