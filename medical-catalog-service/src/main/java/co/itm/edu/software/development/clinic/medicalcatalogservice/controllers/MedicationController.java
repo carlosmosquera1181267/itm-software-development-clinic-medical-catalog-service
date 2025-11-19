@@ -23,14 +23,14 @@ public class MedicationController {
     public ResponseEntity<List<Medication>> getAllMedications() {
         var medications = medicationService.getAllMedications();
 
-        return medications.map(data -> new ResponseEntity<>(data, HttpStatus.OK))
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return medications.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Medication> getMedicationById(@PathVariable String id) {
         var medication = medicationService.getMedicationById(id);
-        return medication.map(data -> new ResponseEntity<>(data, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return medication.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

@@ -23,14 +23,14 @@ public class SpecialityController {
     public ResponseEntity<List<Specialty>> getAll() {
         var specialties = specialtyService.getAllSpecialties();
 
-        return specialties.map(data -> new ResponseEntity<>(data, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return specialties.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Specialty> getById(@PathVariable String id) {
         var specialty = specialtyService.getSpecialtyById(id);
-        return specialty.map(data -> new ResponseEntity<>(data, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return specialty.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

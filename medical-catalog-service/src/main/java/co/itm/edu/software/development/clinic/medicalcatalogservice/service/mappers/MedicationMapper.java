@@ -8,9 +8,9 @@ import java.util.List;
 @Component
 public interface MedicationMapper {
 
-    public Medication toDTO(co.itm.edu.software.development.clinic.medicalcatalogservice.entity.Medication medicationEntity);
+    Medication toDTO(co.itm.edu.software.development.clinic.medicalcatalogservice.entity.Medication medicationEntity);
 
-    public co.itm.edu.software.development.clinic.medicalcatalogservice.entity.Medication toEntity(Medication medicationDTO);
+    co.itm.edu.software.development.clinic.medicalcatalogservice.entity.Medication toEntity(Medication medicationDTO);
 
     List<Medication> toDTOList(List<co.itm.edu.software.development.clinic.medicalcatalogservice.entity.Medication> medicationEntities);
 

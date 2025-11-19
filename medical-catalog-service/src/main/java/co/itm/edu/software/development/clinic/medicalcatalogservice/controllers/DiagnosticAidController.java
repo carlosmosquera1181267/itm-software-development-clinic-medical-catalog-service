@@ -23,8 +23,8 @@ public class DiagnosticAidController {
     public ResponseEntity<List<DiagnosticAid>> getAllDiagnosticAids() {
         var diagnosticAids = diagnosticAidService.findAllDiagnosticAid();
 
-        return diagnosticAids.map(data -> new ResponseEntity<>(data, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return diagnosticAids.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
 
     }
 
@@ -32,7 +32,7 @@ public class DiagnosticAidController {
     public ResponseEntity<DiagnosticAid> getDiagnosticAidById(@PathVariable String id) {
         var diagnosticAid = diagnosticAidService.findById(id);
 
-        return diagnosticAid.map(data -> new ResponseEntity<>(data, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return diagnosticAid.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

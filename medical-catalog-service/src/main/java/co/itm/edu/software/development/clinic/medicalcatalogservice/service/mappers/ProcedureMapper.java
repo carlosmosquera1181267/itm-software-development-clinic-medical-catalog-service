@@ -8,9 +8,9 @@ import java.util.List;
 @Component
 public interface ProcedureMapper {
 
-    public Procedure toDTO(co.itm.edu.software.development.clinic.medicalcatalogservice.entity.Procedure procedureEntity);
+    Procedure toDTO(co.itm.edu.software.development.clinic.medicalcatalogservice.entity.Procedure procedureEntity);
 
-    public co.itm.edu.software.development.clinic.medicalcatalogservice.entity.Procedure toEntity(Procedure procedureDTO);
+    co.itm.edu.software.development.clinic.medicalcatalogservice.entity.Procedure toEntity(Procedure procedureDTO);
 
     List<Procedure> toDTOList(List<co.itm.edu.software.development.clinic.medicalcatalogservice.entity.Procedure> procedureEntities);
 

@@ -8,11 +8,11 @@ import java.util.List;
 @Component
 public interface SpecialtyMapper {
 
-    public co.itm.edu.software.development.clinic.medicalcatalogservice.entity.Specialty toEntity(Specialty specialtyDTO);
+    co.itm.edu.software.development.clinic.medicalcatalogservice.entity.Specialty toEntity(Specialty specialtyDTO);
 
-    public Specialty toDTO(co.itm.edu.software.development.clinic.medicalcatalogservice.entity.Specialty specialtyEntity);
+    Specialty toDTO(co.itm.edu.software.development.clinic.medicalcatalogservice.entity.Specialty specialtyEntity);
 
-    public List<Specialty> toDTOList(List<co.itm.edu.software.development.clinic.medicalcatalogservice.entity.Specialty> specialtyEntities);
+    List<Specialty> toDTOList(List<co.itm.edu.software.development.clinic.medicalcatalogservice.entity.Specialty> specialtyEntities);
 
-    public List<co.itm.edu.software.development.clinic.medicalcatalogservice.entity.Specialty> toEntityList(List<Specialty> specialtyDTOs);
+    List<co.itm.edu.software.development.clinic.medicalcatalogservice.entity.Specialty> toEntityList(List<Specialty> specialtyDTOs);
 }

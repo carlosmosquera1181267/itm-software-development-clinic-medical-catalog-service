@@ -22,14 +22,14 @@ public class ProcedureController {
     public ResponseEntity<List<Procedure>> getAllProcedures() {
         var procedures = procedureService.getAllProcedures();
 
-        return procedures.map(data -> ResponseEntity.ok(data))
+        return procedures.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Procedure> getProcedureById(@PathVariable String id) {
         var procedure = procedureService.getProcedureById(id);
-        return procedure.map(data -> ResponseEntity.ok(data))
+        return procedure.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
