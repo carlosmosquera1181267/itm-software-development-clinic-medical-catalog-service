@@ -1,17 +1,25 @@
 services:
   postgres:
-    image: docker.io/library/postgres
+    #image: docker.io/library/postgres
+    image: postgres:15
     container_name: catalog-service-db
-    restart: always
+    restart: unless-stopped
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: support
+      POSTGRES_DB: clinic_catalog
+      TZ: America/Bogota
     volumes:
       - postgres_catalog_data:/var/lib/postgresql/data
     networks:
       - clinic-network
     ports:
       - "5433:5432"
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "admin" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   # Redis Cache
   redis:
@@ -24,7 +32,7 @@ services:
     volumes:
       - redis_catalog_data:/data
     networks:
-      - api-network
+      - clinic-network
     healthcheck:
       test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
       interval: 10s
@@ -38,12 +46,13 @@ services:
     restart: unless-stopped
     environment:
       REDIS_HOSTS: local:redis:6379:0:redis123
+      TZ: America/Bogota
     ports:
       - "8081:8081"
     depends_on:
       - redis
     networks:
-      - api-network
+      - clinic-network
 
 
   api:
@@ -76,7 +85,8 @@ services:
       - clinic-network
 
 volumes:
-  postgres_data:
+  postgres_catalog_data:
+  redis_catalog_data:
 
 networks:
   clinic-network:

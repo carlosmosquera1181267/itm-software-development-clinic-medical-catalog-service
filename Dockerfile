@@ -1,16 +1,16 @@
-FROM gradle:8.7-jdk17 AS builder
+FROM gradle:8.7-jdk21-alpine AS builder
 LABEL authors="carlosm"
 
 WORKDIR /app
 
-COPY build.gradle settings.gradle gradlew ./
-COPY gradle ./gradle
-COPY src ./src
+COPY medical-catalog-service/build.gradle medical-catalog-service/settings.gradle medical-catalog-service/gradlew ./
+COPY medical-catalog-service/gradle ./gradle
+COPY medical-catalog-service/src ./src
 
 RUN ./gradlew clean build -x test
 
 
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 COPY --from=builder /app/build/libs/*.jar app.jar
 
