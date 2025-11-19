@@ -81,7 +81,7 @@ public class DiagnosticAidServiceTest {
 
         assertTrue(result.isPresent());
         assertEquals(1, result.get().size());
-        assertSame(diagnosticAid, result.get().get(0));
+        assertSame(diagnosticAid, result.get().getFirst());
 
         //verify(diagnosticAidRepository).findAll();
         //verify(diagnosticAidMapper).toDTOList(any());
